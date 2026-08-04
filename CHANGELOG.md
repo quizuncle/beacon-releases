@@ -1,5 +1,30 @@
 # Changelog
 
+## v0.0.3 — 2026-08-04
+
+A redesigned navigation and interaction layer, plus a round of bug fixes.
+
+- The sidebar is now grouped into Data, Test, and System sections with visible
+  labels, and can be collapsed to icons-only from a new toggle at the bottom.
+- Empty states (Collections, Environments, Load Tests) now show a clear
+  heading, description, and one-click action instead of plain text.
+- Every destructive confirmation (deleting a workspace, collection, request,
+  or signing out) now uses one consistent in-app dialog instead of the
+  browser's native popup.
+- Environments are now workspace-specific — switching workspaces switches
+  your environment list too, instead of showing every environment from every
+  workspace.
+- Keyboard navigation and screen-reader support improved throughout: tabs,
+  dialogs, and form controls now expose their state properly.
+- Fixed: creating a collection from a non-default workspace silently did
+  nothing. Sending a request whose URL started with a `{{variable}}` could
+  clear the URL bar and open a stray tab instead of sending. Saving changes
+  to an already-saved request could incorrectly re-open the "save to
+  collection" dialog. The Collection Runner's summary could show a run's
+  duration twice, or fail to reflect an in-progress run in the status bar.
+  Load test charts could clip a value's label against the chart title above
+  it.
+
 ## v0.0.2 — 2026-07-29
 
 Two small fixes in the Environments panel.
