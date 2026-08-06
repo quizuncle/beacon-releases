@@ -1,5 +1,23 @@
 # Changelog
 
+## v0.0.4 — 2026-08-06
+
+Query params now sync both ways between the URL bar and the Params panel, plus
+autosave for saved requests and a handful of fixes.
+
+- Query params typed directly into the URL bar (e.g. `?page=2`) now sync into
+  the Params panel automatically, and params added in the Params panel now
+  show up in the URL bar's preview.
+- New "Autosave Requests" setting (Settings → General, off by default):
+  automatically saves changes to an already-saved request a couple of
+  seconds after you stop editing it.
+- Opening a saved request — from History, search, or an existing tab — now
+  reveals its folder in the Collections sidebar.
+- "Sync settings" in the profile menu now opens directly to the Sync tab
+  instead of General.
+- Fixed: long values in the Interactive response view could wrap onto a
+  second line and overlap the row below.
+
 ## v0.0.3 — 2026-08-04
 
 A redesigned navigation and interaction layer, plus a round of bug fixes.
