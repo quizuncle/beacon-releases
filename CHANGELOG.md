@@ -1,5 +1,30 @@
 # Changelog
 
+## v0.0.5 — 2026-08-07
+
+Beacon's cloud backend has moved to a new home. Nothing changes in the app
+itself, but anything stored in the cloud starts fresh.
+
+**Please export anything you care about before upgrading.**
+
+- **Your cloud account does not carry over.** Signing in after upgrading
+  creates a new, empty account — even with the same Google or GitHub login.
+- **Synced collections, environments, and globals do not carry over.** If
+  Cloud Sync held your only copy of something, export it first: right-click
+  the collection or environment in the sidebar and choose "Export as JSON".
+- **When exporting an environment, choose "Include secrets".** Beacon leaves
+  secret values out of exports by default, so a backup taken with the default
+  option restores with those values blank.
+- **Collection share links created before v0.0.5 will stop working.** If
+  you've shared a collection, ask recipients to import it before they
+  upgrade, or re-publish it afterwards to get a fresh link.
+- **Don't use sign-out to "start over" until you've exported.** Signing out
+  clears local collections and history by design.
+
+Upgrading by itself leaves local data alone — your collections, environments,
+history, and settings stay exactly where they are. Only cloud-stored data and
+previously published share links are affected.
+
 ## v0.0.4 — 2026-08-06
 
 Query params now sync both ways between the URL bar and the Params panel, plus
