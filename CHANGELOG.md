@@ -25,6 +25,16 @@ Upgrading by itself leaves local data alone — your collections, environments,
 history, and settings stay exactly where they are. Only cloud-stored data and
 previously published share links are affected.
 
+This release also hardens how API keys in URLs are handled:
+
+- Sharing a collection now blanks an API key kept directly in a request URL's
+  query string (`?apiKey=...`), the same way it already blanked the matching
+  params row and the auth field. Previously that URL copy survived into the
+  public share document.
+- Cloud Sync now encrypts the same URL copy before upload, alongside the
+  credentials it already encrypted. Existing synced URLs are unaffected and
+  round-trip unchanged.
+
 ## v0.0.4 — 2026-08-06
 
 Query params now sync both ways between the URL bar and the Params panel, plus
