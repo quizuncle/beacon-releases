@@ -1,5 +1,27 @@
 # Changelog
 
+## v0.0.6 — 2026-08-07
+
+Beacon gets a third theme line: **Bloom** — four pink-toned shades alongside
+the existing Dark and Light groups in Settings → Appearance.
+
+- **Four new themes:** Mulberry (deep plum-wine) and Mauve (dusty rose-grey)
+  for dark mode; Quartz (soft blush) and Shell (warm peach-cream) for light.
+- **Each Bloom shade carries its own accent color** — buttons, focus rings,
+  and selection match the shade instead of staying blue. Your custom accent
+  color, if set, still wins everywhere.
+- **Softer corners under Bloom.** Bloom shades round the UI's corners a
+  touch more; the existing six themes render exactly as before.
+- **Every Bloom palette is contrast-checked** against the same legibility
+  bars the shipped themes meet, enforced by tests so future tuning can't
+  quietly regress readability.
+- Fixed: the Appearance grid now marks the active theme correctly for
+  settings saved before named themes existed (the old "dark"/"light"
+  values showed no selection).
+
+Switching themes, custom accents, and all existing settings carry over
+unchanged.
+
 ## v0.0.5 — 2026-08-07
 
 Beacon's cloud backend has moved to a new home. Nothing changes in the app
