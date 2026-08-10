@@ -12,8 +12,6 @@
 - [The request panel tab strip](#the-request-panel-tab-strip)
 - [Generating code snippets](#generating-code-snippets)
 
-> On Windows and Linux, `⌘` means `Ctrl` throughout this chapter.
-
 ## The method selector
 
 At the left of the request bar sits the method selector — a text button showing the current HTTP method (color-coded) and a chevron. Click it to pick a different method. Its tooltip reads `HTTP method for this request — changes how the body and cache behave.`

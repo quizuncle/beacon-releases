@@ -70,6 +70,6 @@ Beacon is a keyboard-first, local-first desktop API client — a Postman alterna
 
 ## Conventions used in this guide
 
-- Keyboard shortcuts are written with `⌘` (for example `⌘↵`). On Windows and Linux, use `Ctrl` wherever you see `⌘`.
+- Keyboard shortcuts are written with `⌘` (for example `⌘↵`).
 - Exact UI labels — button text, tooltips, menu items, field placeholders, and setting names — are shown in `code font`.
 - This guide is text-only. The UI evolves, so layouts are described in words rather than screenshots.

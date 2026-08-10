@@ -8,7 +8,7 @@
 - [The local-first model](#the-local-first-model)
 - [Your first request](#your-first-request)
 
-Beacon is a desktop app for macOS and Windows. On Windows and Linux, use `Ctrl` wherever this guide shows `⌘`.
+Beacon is a desktop app for macOS 12 (Monterey) or later, on Apple Silicon and Intel.
 
 ## Installing Beacon
 

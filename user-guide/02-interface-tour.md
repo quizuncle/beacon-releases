@@ -12,8 +12,6 @@
 - [Workspaces](#workspaces)
 - [The Status strip](#the-status-strip)
 
-On Windows and Linux, use `Ctrl` wherever this guide shows `⌘`.
-
 ## Window layout
 
 Beacon stacks its interface top to bottom:

@@ -12,6 +12,8 @@
 - [binary](#binary)
 - [Automatic body-type detection](#automatic-body-type-detection)
 
+## Choosing a body type
+
 Open the **Body** tab in the request panel. A segmented selector picks the body format: `none`, `JSON`, `GraphQL`, `form-data`, `urlencoded`, `raw`, or `binary`. The selector's help tip notes that the choice *switches the editor and the `Content-Type` header sent*. When a body is present, the **Body** tab shows a green dot and a small byte-size pill.
 
 ## JSON

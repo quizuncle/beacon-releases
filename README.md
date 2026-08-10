@@ -4,8 +4,8 @@
 to Postman/Insomnia. Compose and send HTTP requests, manage collections and environments,
 write pre/post-request test scripts, chain assertions with a no-code builder, mock APIs
 locally, monitor endpoints on a schedule, and inspect responses with a JSONPath filter,
-auto-table view, and a full DNS → TCP → TLS → TTFB timing waterfall — all stored locally
-on your machine, no account required.
+auto-table view, and a request timeline breaking each response into waiting (TTFB),
+downloading and total — all stored locally on your machine, no account required.
 
 This repository hosts **downloadable builds only**. It does not contain Beacon's source
 code.
@@ -66,7 +66,7 @@ mounts it, copies the app, and runs `xattr -cr`.
 
 ## Requirements
 
-- macOS 11 (Big Sur) or later.
+- macOS 12 (Monterey) or later.
 - Apple Silicon or Intel — both are published with every release.
 
 ## Why the Gatekeeper warning?

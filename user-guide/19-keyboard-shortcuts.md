@@ -2,7 +2,7 @@
 
 *The complete shortcut reference.*
 
-On Windows and Linux, use `Ctrl` wherever this guide shows `⌘`. Press `⌘/` at any time to open the in-app shortcuts overlay.
+Press `⌘/` at any time to open the in-app shortcuts overlay.
 
 ## Requests
 
