@@ -19,7 +19,7 @@
 
 ## The Collections panel
 
-Open the **Collections** panel from the Activity Rail (`⌘1`). Its header has icon buttons for **Find & Replace**, **Import**, **Import from share**, **Manage shares**, and **New collection**, plus the panel's pin button.
+Open the **Collections** panel from the Activity Rail (`⌘1`). Its header has icon buttons for **Find & Replace**, **Import**, **Export**, **Import from share**, **Manage shares**, and **New collection**, plus the panel's pin button.
 
 ## Creating and organizing
 
@@ -70,14 +70,34 @@ A saved request can hold named response **examples** (saved from the response vi
 - **Postman environment / globals exports**
 - **OpenAPI 3 / Swagger 2 specs** — grouped into folders by tag, with examples pulled into request bodies
 - **HAR files** — each entry becomes a request
+- **Beacon bundles** — the multi-collection files written by [Export](#exporting); these take one extra step, below
 
 A progress bar shows `Importing <n> of <total>…`. Results list what imported and what failed, with a collapsible `⚠ Imported with <n> warning(s)` section noting anything adjusted (unsupported auth set to none, file fields without a source path dropped, unrecognized items skipped).
 
-> **Note:** Imported collections arrive with scripts **untrusted** — see [the trust gate](#the-script-trust-gate).
+**Bundles ask where to go.** A bundle is recognized as you open it, and rather than landing silently it opens the **Import Bundle** modal, asking `Where should "<name>" be imported?` Pick **Into a new workspace** — the name box is pre-filled with the workspace name the bundle was exported under — or **Add to the current workspace**, then **Import**. Select several bundles at once and Beacon asks once per bundle, in turn.
+
+Two things the chooser points out:
+
+- *Global variables, mock routes and flows merge into your app-wide lists either way.* Only collections and environments follow your choice of workspace; a new workspace is not an isolated sandbox for the rest.
+- If the bundle was exported with its secrets, a red panel warns that **This bundle contains live credentials.** Only import files from people you trust.
+
+What landed is then reported in the same results panel as any other import, listing each collection, environment, mock route, and flow by name. Imported flows keep the links to the requests they call, re-pointed at the imported copies — and when they arrive in a new workspace, that is the workspace they run in (Beacon switches you to it as the import finishes). Warnings cover whatever didn't come across cleanly: a mock route whose method and path already exist, a flow node whose linked request wasn't in the bundle, and any scripts inside a flow, which are cleared on import so that foreign code can't run.
+
+> **Note:** Imported collections arrive with scripts **untrusted** — see [the trust gate](#the-script-trust-gate). Collections from a bundle land the same way.
 
 ## Exporting
 
-From a collection's `⋯` menu: **Export as JSON** saves a `<name>.postman_collection.json` file, and **Export as folder** writes a git-friendly Beacon collection folder to a directory you pick.
+**One collection.** From a collection's `⋯` menu: **Export as JSON** saves a `<name>.postman_collection.json` file, and **Export as folder** writes a git-friendly Beacon collection folder to a directory you pick.
+
+**Several at once — a bundle.** The header's **Export** button opens the **Export** dialog, which writes any number of collections, plus the things that surround them, into a single `.json` bundle file. **Entire workspace** selects the lot in one click; the label beside it reads **Custom** as soon as your selection is narrower than that.
+
+Tick the collections you want (**All collections** toggles every one), then choose what travels with them: **Environments**, **Global variables**, **Mock routes**, and **Flows**. Each shows how many you have, or greys out as `(none to export)` when there is nothing to include. The button counts your selection — `Export (3)` — and stays disabled until you pick at least one collection; a large workspace takes a moment, so it changes to **Exporting…** with a spinner while the file is written. The save dialog suggests `beacon-workspace-<workspace>-<date>.json` for a whole workspace and `beacon-collections-<n>-<date>.json` otherwise.
+
+> **Note:** Global variables, mock routes and flows are app-wide, not scoped to this workspace. **Entire workspace** ships all of them, not only the ones you use here.
+
+**Secrets are blanked unless you opt in.** With **Include secret values** off — the default — Beacon empties every value whose position marks it as a credential and keeps the row, so the recipient can see what's expected and fill in their own: secret-marked collection, environment, and global variables; auth at every level (bearer tokens, basic passwords, API-key values, OAuth secrets and tokens); an API key carried in a URL, query param, or header; secret-marked flow inputs; and credential headers on mock routes. Ticking the box opens a confirmation, **Include live secrets in this export?**, offering **Keep them blanked** and **Include secrets** — dismissing it any other way leaves them blanked.
+
+> **Warning:** Beacon can't detect a credential **hardcoded into a request body or a mock's response body**; those ship verbatim even with secrets blanked. Review before you send a file on. And a bundle exported with **Include secrets** holds live credentials in plain text — treat it like a password.
 
 ## Sharing
 

@@ -38,11 +38,20 @@ Once active, a background poll pushes local changes every few seconds, and a man
 
 ## What syncs and what doesn't
 
-**Synced:** collections (and their folders, requests, scripts, auth, and variables), environments, global variables, workspaces, mock routes, and app settings.
+**Synced:** **collections** (and their folders, requests, scripts, auth, and variables), **environments**, **global variables**, **workspaces**, **mock routes**, **flows**, and **app settings**.
 
 **Not synced:** request/response **history**; **load-test** configs, runs, and samples; and your **proxy** host/port and credentials (kept per-device). Secret variable values are **encrypted** before upload (see below).
 
 > **Note:** Collections that arrive by sync land with scripts **untrusted**, exactly like an import — enable them per collection after review. See [Collections](11-collections.md#the-script-trust-gate).
+
+**How flows travel.** Everything about a flow uploads in the clear on the same terms a collection's contents do — the canvas layout and wiring, flow and node names, condition sources, extract rows, links to saved requests, request URLs and bodies, and **Script** node code. Two credential-bearing spots are **encrypted** first, under the same passphrase as your secret variables:
+
+- An **Inline** Request node's credentials — its auth (bearer token, basic username and password, API-key value, OAuth2 client secret, password, and access/refresh tokens), any credential-bearing header such as `Authorization`, `Cookie`, or `X-Api-Key`, a custom-named header or query-param row carrying that request's API key, and a `user:pass@` or API key written into the URL itself. A **Linked** Request node has no credentials of its own — the saved request it points to is protected as part of its collection.
+- An **Input** node field's **Default value**, when that field has **Secret (masked)** turned on.
+
+Nothing else in a flow counts as a credential, so a token you hardcode into a URL path, a body, or a script uploads exactly as you typed it. See [Flows](13-flows.md).
+
+> **Note:** Flows only began syncing in v0.1.0. If you built flows on an earlier version they stayed on this machine; they upload on your **first sync after upgrading** — the next **Sync now**, passphrase unlock, or launch with sync on. If you'd rather they didn't leave the machine, turn sync off or delete them before that first sync.
 
 ## The sync passphrase
 

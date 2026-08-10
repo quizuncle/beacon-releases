@@ -49,7 +49,7 @@ The body has four view modes in a segmented control:
 | `Raw` | The exact bytes as received. |
 | `Preview` | A rendered view — HTML in a sandboxed frame, images, or PDFs. |
 
-Beacon auto-selects a mode per response: `Preview` for images and PDFs, `Interactive` for JSON under the size limit, otherwise `Pretty`.
+`Preview` is always auto-selected for images and PDFs. For everything else, the default view is chosen in **Settings → Appearance → Response View** (default: `Interactive`) — but large JSON (over 2000 nodes or 5 MB) always opens in `Pretty` for performance, regardless of the setting.
 
 **Body tools** (in the Body header, for JSON in Pretty mode unless noted):
 
