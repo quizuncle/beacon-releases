@@ -42,7 +42,9 @@ Once active, a background poll pushes local changes every few seconds, and a man
 
 **Not synced:** request/response **history**; **load-test** configs, runs, and samples; and your **proxy** host/port and credentials (kept per-device). Secret variable values are **encrypted** before upload (see below).
 
-> **Note:** Collections that arrive by sync land with scripts **untrusted**, exactly like an import — enable them per collection after review. See [Collections](11-collections.md#the-script-trust-gate).
+> **Note:** A collection carries its **script trust** across sync, unlike an import. One you enabled scripts for on another device arrives ready to run them; one you never enabled — or one saved before the trust flag existed — arrives **untrusted** and has to be enabled here. The rule is that only an explicit yes travels, so trust is never invented on the way. See [Collections](11-collections.md#the-script-trust-gate).
+>
+> A **flow** is the same: its **Script** nodes and any script on an inline request run on arrival without a separate prompt, because a synced flow is your own code coming from your own device under your own passphrase. A flow that arrives in a **bundle** is treated as foreign and has its scripts stripped instead — see [Collections](11-collections.md#importing).
 
 **How flows travel.** Everything about a flow uploads in the clear on the same terms a collection's contents do — the canvas layout and wiring, flow and node names, condition sources, extract rows, links to saved requests, request URLs and bodies, and **Script** node code. Two credential-bearing spots are **encrypted** first, under the same passphrase as your secret variables:
 
