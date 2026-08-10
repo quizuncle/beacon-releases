@@ -1,6 +1,6 @@
 # Cloud accounts
 
-*Signing in, end-to-end-encrypted Cloud Sync across devices, and public collection sharing.*
+*Signing in, Cloud Sync across devices with your secret values encrypted, and public collection sharing.*
 
 **In this chapter**
 - [Signing in](#signing-in)
