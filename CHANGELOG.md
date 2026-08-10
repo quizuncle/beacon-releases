@@ -1,5 +1,79 @@
 # Changelog
 
+## v0.1.0 — 2026-08-10
+
+Bundle exports, hourly update checks, and live theme previews.
+Two behavior changes are worth reading before you upgrade — they're below.
+
+**Export and import**
+
+- **Export the whole workspace in one click.** The new Export dialog has a
+  Workspace preset that puts every collection, environment, global variable,
+  mock route, and flow into a single file.
+- **Or pick exactly what you want.** Select any number of collections and tick
+  the extras you want alongside them — environments, globals, mock routes,
+  flows.
+- **Secrets stay out unless you say otherwise.** Secret environment values,
+  auth credentials, API keys in URLs, and credential headers on mock routes
+  are blanked by default; including them takes a deliberate confirmation.
+- **Importing asks where things should go** and reports what landed. Flows
+  keep their links to the requests they call, remapped to the imported copies.
+- Single-collection and Postman imports work exactly as before — a bundle is
+  recognized when you open it, so there's one Import button for both.
+
+**Updates**
+
+- **Beacon now checks for updates every hour while it's running**, not only at
+  launch. An update released while you're working shows up the same hour.
+- **The update notice carries the release notes.** Expand "What's new" in the
+  notification to read what changed before you decide to install.
+- **After an update installs, Beacon shows a one-time "What's new" popup** on
+  the next launch, so a release installed in the background doesn't go unread.
+  This release is the one that puts the mechanism in place; the popup itself
+  starts appearing from the next release onward.
+
+**Appearance**
+
+- **Clicking a theme in Settings previews it immediately** across the whole
+  app. Cancel and it reverts to what you had; save and it sticks.
+
+**Please read before upgrading**
+
+- **Clearing cookies for a host now also clears that host's parent-domain
+  cookies.** This matches how Beacon already decides which cookies to *send*:
+  a cookie set on `.example.com` was sent with requests to `api.example.com`
+  but survived clearing them, so "clear" didn't. Clearing cookies for one
+  subdomain can now sign you out of its siblings. The confirmation dialog
+  names what will be removed before anything happens.
+- **Flows now sync to the cloud** alongside collections, environments, and
+  globals. If you use Cloud Sync, your flows upload on the first sync after
+  upgrading. Credentials stored inside a flow are encrypted before upload, the
+  same as everywhere else in sync.
+
+**Security**
+
+- A response body, a collection's notes, or an OAuth page can no longer open
+  arbitrary windows or navigate the app away from itself. External links open
+  in your browser, and only `http`/`https` ones do.
+- OAuth authorization URLs are validated before the sign-in window opens.
+- A link written as `//somewhere-else.com` in notes is no longer rendered as a
+  live off-site link.
+- Exporting or sharing a flow no longer carries credentials left behind on a
+  node whose auth mode was switched.
+
+**Fixes**
+
+- Turning the proxy off and back on no longer discards the saved proxy
+  username and password.
+- A blank proxy port no longer saves as an unusable value.
+- Cookies whose domain contains uppercase letters are now sent with matching
+  requests.
+- Clearing cookies with an empty host no longer wipes the entire cookie jar.
+- Lists in request and collection notes render correctly when a bullet wraps
+  across lines or mixes numbered and unnumbered nesting.
+- Icon-only buttons throughout the app, and every input in Settings, now carry
+  accessible names for screen readers.
+
 ## v0.0.6 — 2026-08-07
 
 Beacon gets a third theme line: **Bloom** — four pink-toned shades alongside
