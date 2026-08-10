@@ -10,8 +10,12 @@ downloading and total — all stored locally on your machine, no account require
 This repository hosts **downloadable builds only**. It does not contain Beacon's source
 code.
 
+> 🌐 **[beacon.quizuncle.com](https://beacon.quizuncle.com/)** — downloads, the user
+> guide, the changelog and the privacy policy, all in one place.
+>
 > 📖 **[Read the User Guide](user-guide/README.md)** — a complete, indexed walkthrough of
-> every feature, from your first request to flows, load testing, and cloud sync.
+> every feature, from your first request to flows, load testing, and cloud sync. Also
+> published at [beacon.quizuncle.com/guide/](https://beacon.quizuncle.com/guide/).
 
 ## Install
 
@@ -116,4 +120,8 @@ platform, and free browser-based tools for developers.
 
 ## License
 
-Beacon is distributed under the [MIT License](LICENSE).
+Beacon is free to download and use, for personal and commercial work alike. The
+app's source code is private and is not licensed for redistribution — see the
+[terms of use](LICENSE), or the full
+[terms](https://beacon.quizuncle.com/terms/) and
+[privacy policy](https://beacon.quizuncle.com/privacy/).

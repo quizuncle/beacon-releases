@@ -1,16 +1,24 @@
-MIT License
+Beacon — Terms of Use
 
-Copyright (c) 2026 Vivek
+Copyright (c) 2026 Quizuncle. All rights reserved.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+Beacon is free to download and use, for personal and commercial work alike. No
+account and no payment are required.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+WHAT YOU MAY DO
+
+You may install and run Beacon on any Mac you use. You may use it for any
+lawful purpose, including commercial work, without paying a fee.
+
+WHAT THIS IS NOT
+
+This repository distributes compiled builds only. Beacon's source code is
+private and is not licensed to you. You may not redistribute the application or
+any modified build of it, and you may not remove or alter its notices. You may
+not reverse-engineer it except to the extent that applicable law expressly
+permits despite this restriction.
+
+NO WARRANTY
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -19,3 +27,20 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+Beacon is not code-signed or notarized by Apple. Installing via Homebrew or the
+install script clears the macOS quarantine flag for you; a manual DMG install
+needs `xattr -cr /Applications/Beacon.app` once. That clears the extended
+attributes on the app bundle and disables no other protection.
+
+YOUR DATA
+
+Beacon stores your work locally. No backups are kept for you, a forgotten Cloud
+Sync passphrase cannot be recovered, and a collection you publish as a share is
+public to anyone holding its link.
+
+FULL TERMS
+
+The complete terms, together with the privacy policy, are published at
+https://beacon.quizuncle.com/terms/ and https://beacon.quizuncle.com/privacy/
+and govern your use of Beacon.
