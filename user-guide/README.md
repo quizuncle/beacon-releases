@@ -1,6 +1,6 @@
 # Beacon User Guide
 
-Beacon is a keyboard-first, local-first desktop API client — a Postman alternative for composing, sending, and testing HTTP and WebSocket requests. Everything you create lives in a local SQLite database on your machine; nothing leaves your computer unless you turn on Cloud Sync. This guide covers the app end to end, from your first request to advanced flows, load tests, and cloud accounts.
+Beacon is a keyboard-first, local-first desktop API client — a Postman alternative for composing, sending, and testing HTTP and WebSocket requests. Everything you create lives in a local SQLite database on your machine, and none of your work leaves your computer unless you turn on Cloud Sync. (Beacon does report anonymous usage data about the app itself — counts, versions, scrubbed error messages, never your requests. It is on by default, can be switched off, and is fully described in [Settings → Privacy](18-settings.md#privacy).) This guide covers the app end to end, from your first request to advanced flows, load tests, and cloud accounts.
 
 ## Feature map
 
@@ -48,7 +48,7 @@ Beacon is a keyboard-first, local-first desktop API client — a Postman alterna
 ### Reference
 | Chapter | What it covers |
 |---|---|
-| [Settings](18-settings.md) | Every setting across all six tabs, plus the in-app updater |
+| [Settings](18-settings.md) | Every setting across all seven tabs, the privacy disclosure, sending feedback, and the in-app updater |
 | [Keyboard shortcuts](19-keyboard-shortcuts.md) | The complete shortcut reference |
 
 ## Find it fast
@@ -66,6 +66,8 @@ Beacon is a keyboard-first, local-first desktop API client — a Postman alterna
 | Chain one request's output into the next | [Flows](13-flows.md) |
 | Sync my work across machines | [Cloud accounts](16-cloud-accounts.md) |
 | Change the timeout, proxy, or theme | [Settings](18-settings.md) |
+| Know what Beacon reports about itself | [Settings → Privacy](18-settings.md#privacy) |
+| Send feedback or report a problem | [Settings → Sending feedback](18-settings.md#sending-feedback) |
 | See every keyboard shortcut | [Keyboard shortcuts](19-keyboard-shortcuts.md) |
 
 ## Conventions used in this guide

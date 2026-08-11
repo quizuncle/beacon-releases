@@ -1,5 +1,62 @@
 # Changelog
 
+## v0.2.0 — 2026-08-11
+
+An editor that finally works offline, a way to tell us what you think, and a
+long list of accessibility and security repairs. Beacon also starts reporting
+anonymous usage data — see the last section, and `Settings → Privacy`.
+
+**The editor no longer needs the internet**
+
+- **Beacon used to download about five megabytes of the Monaco editor from a
+  public CDN** the first time you opened any editor. Without a network — on a
+  plane, or behind a proxy that blocked it — there was no editor at all, in an
+  app that's meant to be local-first. The editor now ships inside Beacon.
+- The updater now validates what it downloads before offering it to you.
+
+**Feedback**
+
+- **You can now send feedback from inside Beacon** — a rating, a note, and
+  optionally an email if you want a reply. Find it in the command palette
+  (`>` then "Send Feedback"), the account menu, or `Settings → Privacy`.
+- **It works offline.** Feedback is queued on your machine and sent when you're
+  next connected, so writing it on a plane doesn't lose it.
+
+**Accessibility**
+
+- **Every control has a usable name**, and the sidebar works without a mouse.
+- **Closing and pinning a tab now work from the keyboard.** Both were plain
+  text with no role and no focus, so neither was reachable at all.
+- Screen readers can now see the tab controls, which were nested inside another
+  button and hidden as a result.
+
+**Security**
+
+- **A response body can no longer navigate a subframe anywhere it likes.**
+  Frame navigation is now checked against an allowlist, and redirects are
+  checked on the main window too, not just direct navigations.
+- Cookie clearing for a host and for its parent domain are now separate
+  actions, so clearing one no longer quietly signs you out of the others.
+
+**Fixes**
+
+- **One malformed row in a bundle no longer discards the whole import.**
+- **A flow editor left open in the background can no longer overwrite someone
+  else's newer version of that flow.**
+- Tooltips no longer rename controls that already have their own visible text.
+- Nested lists render at any depth in Markdown, and a blank line no longer
+  splits one list into two.
+
+**Usage data**
+
+- Beacon now reports anonymous usage — which features get used, app version,
+  platform, rough location, and scrubbed error reports — tied to a random ID
+  generated for this install, never to your name unless you sign in.
+- It never includes your requests, responses, secrets, scripts, or the names of
+  anything you've created.
+- It's on by default; one switch in `Settings → Privacy` turns it off, and that
+  page has the full detail.
+
 ## v0.1.0 — 2026-08-10
 
 Bundle exports, hourly update checks, and live theme previews.

@@ -45,7 +45,9 @@ The first time you open Beacon, an optional `Sign in to Beacon` prompt appears. 
 
 ## The local-first model
 
-Everything you do in Beacon — requests, collections, environments, history, cookies — is stored in a local SQLite database in your user data folder on your own machine. Nothing is uploaded anywhere by default. Your data leaves your computer only if you explicitly turn on Cloud Sync from a signed-in account. This means Beacon works fully offline, and your requests and secrets stay on your device unless you opt in. See [Cloud accounts](16-cloud-accounts.md).
+Everything you do in Beacon — requests, collections, environments, history, cookies — is stored in a local SQLite database in your user data folder on your own machine. None of it is uploaded anywhere by default: your work leaves your computer only if you explicitly turn on Cloud Sync from a signed-in account. This means Beacon works fully offline, and your requests and secrets stay on your device unless you opt in. See [Cloud accounts](16-cloud-accounts.md).
+
+Beacon does report **anonymous usage data** about the app itself — feature counts, app version, platform, a rough location (country, the nearest Cloudflare data centre on your network path, and your device's time-zone name — never your address and never your IP), and scrubbed error messages. It never includes a request, a URL, a header, a body, a variable value or a name you chose. It is on by default and can be switched off from [Settings → Privacy](18-settings.md#privacy), which also describes exactly what is sent.
 
 ## Your first request
 
