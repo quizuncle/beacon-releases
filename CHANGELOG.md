@@ -1,5 +1,31 @@
 # Changelog
 
+## v0.2.1 — 2026-08-13
+
+A proper About window, and a one-click way to copy any request as a cURL
+command.
+
+**About Beacon**
+
+- **Beacon now has a real About window**, with the version, links to the site,
+  the changelog and the terms, and the support address. It opens from the
+  Beacon menu on macOS, and from a new Help menu on Windows and Linux — which
+  had no About entry at all before this release.
+- **It shows what a good bug report needs** — the Electron, Chromium and Node
+  versions Beacon is running on, and your platform — with a button that copies
+  all of it at once.
+- **You can check for updates from it**, and the result appears in the window
+  rather than in a separate dialog.
+
+**Copy as cURL**
+
+- **A new button in the request bar copies the current request as a cURL
+  command in one click.** Previously this meant opening the code-snippet
+  window, choosing cURL, copying, and closing it again.
+- **It produces exactly what the code-snippet window produces** — the same
+  resolved variables, the same inherited collection and folder headers and
+  auth, and query parameters folded into the URL.
+
 ## v0.2.0 — 2026-08-11
 
 An editor that finally works offline, a way to tell us what you think, and a
