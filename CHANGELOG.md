@@ -8,9 +8,8 @@ command.
 **About Beacon**
 
 - **Beacon now has a real About window**, with the version, links to the site,
-  the changelog and the terms, and the support address. It opens from the
-  Beacon menu on macOS, and from a new Help menu on Windows and Linux — which
-  had no About entry at all before this release.
+  the changelog and the terms, and the support address. Open it from the Beacon
+  menu.
 - **It shows what a good bug report needs** — the Electron, Chromium and Node
   versions Beacon is running on, and your platform — with a button that copies
   all of it at once.
