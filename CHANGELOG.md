@@ -1,5 +1,20 @@
 # Changelog
 
+## v0.2.2 — 2026-08-13
+
+Every Copy button works again.
+
+**Fixes**
+
+- **Copying to the clipboard silently did nothing.** A share link, a response
+  body, a value or a path from the JSON tree, a code snippet, a cURL command,
+  the diagnostics in the About window — every one of them failed without
+  saying so, and the icon just never changed to a tick. Beacon was refusing
+  itself permission to write to the clipboard. This has been broken since
+  v0.2.0; if you tried to copy something and nothing arrived, that was this.
+- **Beacon still cannot read your clipboard.** Only writing was restored, so
+  nothing shown in the app can see what you last copied elsewhere.
+
 ## v0.2.1 — 2026-08-13
 
 A proper About window, and a one-click way to copy any request as a cURL
