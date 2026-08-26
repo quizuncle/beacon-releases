@@ -65,6 +65,14 @@ A monitor runs a **saved request** on a fixed interval and tracks its health and
 
 **Monitor detail** shows the uptime percentage and run count, a **latency sparkline** of recent runs (colored by state), and a **run history** list (newest first) with each run's time, status, and latency or error.
 
+**Exporting the history.** The download button in the detail header saves the run history as JSON — the monitor's schedule and thresholds, the uptime percentage, and every run Beacon still keeps (the last 100). It is health data only: a monitor run records the verdict, status, latency and any error message, never the request or response itself. The button is disabled until the monitor has run at least once.
+
+This is a **health export**, not the run report the [Collection runner](12-collection-runner.md#exporting-a-run-report) and [flows](13-flows.md#exporting-a-run-report) produce. There are no per-request results here to turn into a JUnit `<testcase>` or an HTML page, so JSON is the only format and there is nothing to include bodies from.
+
+> **Before you attach it to a ticket:** an error message can quote something the request was carrying — a script error, or a GraphQL variables error that echoes the JSON after your `{{variables}}` were filled in. On export, Beacon blanks any value currently marked **secret** — in any environment in this workspace, in your globals, or in the collection the monitored request lives in — wherever it appears in those messages. Two things it cannot blank: a secret you have since rotated or unflagged, and — because monitors are not tied to a workspace while environments are — the secrets of an environment belonging to a *different* workspace than the one you are in. Give the file a glance if the monitor has been recording errors.
+>
+> On screen, the run history shows each error exactly as it was recorded — nothing is blanked there, deliberately, because that text is what makes a failure diagnosable and the value in it has already gone to the host being monitored. It stays in Beacon's local database on this machine: a monitor's run history is not part of cloud sync, and it is not included when you export or share a collection. The download button above is the only thing that copies it out, and that is the path that blanks it.
+
 **How health is judged.** A run is **down** on a network error, a non-2xx status, or (with the tests option on) a failed test; **degraded** when 2xx but slower than the threshold; **up** otherwise. Uptime is the share of runs that were up or degraded.
 
 **Notifications.** When enabled, a native `Beacon monitor` notification fires only on a **state change** — `<name> is down`, `<name> recovered`, or `<name> is degraded (slow)` — never on every run.

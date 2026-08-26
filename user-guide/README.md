@@ -39,6 +39,7 @@ Beacon is a keyboard-first, local-first desktop API client — a Postman alterna
 | [Flows](13-flows.md) | Chaining requests visually on a canvas |
 | [Load testing](14-load-testing.md) | Firing a request concurrently to measure latency and throughput |
 | [Mock, WebSocket, and monitors](15-mock-websocket-monitors.md) | Local mock server, WebSocket client, and scheduled monitors |
+| [Command line and CI](20-cli.md) | The `beacon` command: running a bundle's collections and flows headlessly, with reports and exit codes |
 
 ### Cloud
 | Chapter | What it covers |
@@ -63,6 +64,8 @@ Beacon is a keyboard-first, local-first desktop API client — a Postman alterna
 | Write a test that checks the response | [Scripts and tests](08-scripts-and-tests.md) |
 | Find a request I sent earlier | [History and cookies](17-history-and-cookies.md) |
 | Run every request in a collection at once | [Collection runner](12-collection-runner.md) |
+| Get a run's results into CI, or onto a ticket | [Collection runner → Exporting a run report](12-collection-runner.md#exporting-a-run-report) |
+| Run my collections from a terminal or a build | [Command line and CI](20-cli.md) |
 | Chain one request's output into the next | [Flows](13-flows.md) |
 | Sync my work across machines | [Cloud accounts](16-cloud-accounts.md) |
 | Change the timeout, proxy, or theme | [Settings](18-settings.md) |

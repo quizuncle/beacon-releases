@@ -8,6 +8,7 @@
 - [The canvas](#the-canvas)
 - [Node types](#node-types)
 - [Running a flow](#running-a-flow)
+- [Exporting a run report](#exporting-a-run-report)
 - [Flow variables](#flow-variables)
 - [Loops and safety](#loops-and-safety)
 
@@ -55,11 +56,28 @@ When the flow has a Start node, a **Run** button appears in its header (`Run the
 
 The run visualizes live: each node's border reflects its phase (running, success, failed, cancelled), traversed edges animate, and a re-visited node shows a `×N` visit counter. Selecting a node that produced a response shows its body and headers in a pane below. A collapsible **Run log** at the bottom lists timestamped, color-coded (info / warn / error) lines and the final `Run <status>`.
 
+## Exporting a run report
+
+When the run finishes, a **run report** export appears next to the status in the header — the same one the [Collection runner](12-collection-runner.md#exporting-a-run-report) offers, with the same three formats (**JSON report**, **JUnit XML**, **HTML report**), the same **Include bodies (JSON only)** tick, and the same **Export Report** button. The file is saved as `<flow>-run.<ext>`.
+
+What differs is what an entry is:
+
+- **One entry per Request node the run executed**, tagged with that node and its type — including one that failed outright, which lands in the report as an error. No other node type produces an entry, so Start, Condition, Extract, Delay, Script, and Input nodes are simply absent.
+- A node a loop visited more than once contributes **its last visit** — exactly what the run view shows. The report doesn't invent history the run never kept.
+- A flow run counts as **one iteration**, however many times a loop went round; a node's visit number is recorded on its entry instead.
+- **Flow variables are never written into a report.** Extract nodes, Input nodes, and `pm.flow.set` routinely park a token or a session id there, and none of those carry your `secret` flag, so Beacon has no way to tell which ones would need masking.
+
+Masking works exactly as it does for the runner: credential headers lose their values, and every variable you marked secret — in an environment, in your globals, or in any collection the run's linked requests came from — comes out as `••••••`.
+
+Your API key is masked wherever it is carried, including under a header or query-parameter name you invented (`X-Company-Token`): each step is masked against the auth *that step* resolved, so a request overriding its collection with its own key is covered too.
+
+> **One thing a flow report can't mask.** If a script on one of the run's requests rewrites a collection variable mid-run, the new value is a blind spot — a flow never saves collection-variable writes, so neither the before nor the after picture Beacon masks against contains it. Environment and global rotations are covered.
+
 ## Flow variables
 
-**Extract** nodes, **Input** nodes, and `pm.flow.set` write **flow variables**, referenced downstream as `{{variable}}`. In interpolation, flow variables take the highest precedence, then environment → collection → global. The run works on deep copies of your environment and global variables, so it has no side effects **unless** a Script node explicitly calls `pm.environment.set` or `pm.globals.set` — only the keys it changes are merged back and persisted.
+**Extract** nodes, **Input** nodes, and `pm.flow.set` write **flow variables**, referenced downstream as `{{variable}}`. In interpolation, flow variables take the highest precedence, then environment → collection → global. The run works on deep copies of your environment and global variables, so it has no side effects **unless** a script explicitly calls `pm.environment.set` or `pm.globals.set` — whether that is a **Script** node or a script on one of the requests the flow sends. Only the keys it changed are merged back and persisted. Collection variables are the exception: a run can set one and later steps using that same collection see the new value, but the write is dropped when the run ends.
 
-> **Note:** Flow Request nodes send the request's URL, headers, body, and auth, but do not run a saved request's own pre-request or test scripts — the flow engine drives execution itself. Use a **Script** node for logic between steps.
+> **Note:** A linked **Request** node sends the saved request through the same path the [Collection runner](12-collection-runner.md) uses, so its collection's and its own pre-request and test scripts **do** run — subject to that collection's [script trust gate](11-collections.md#the-script-trust-gate), exactly as in a collection run. A **Script** node is for logic that belongs *between* steps rather than to one request; note that it runs with no collection in scope, so `pm.collectionVariables.set` inside one writes to nothing.
 
 ## Loops and safety
 

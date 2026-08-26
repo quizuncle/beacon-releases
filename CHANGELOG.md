@@ -1,5 +1,57 @@
 # Changelog
 
+## v0.3.0 — 2026-08-26
+
+Every run can now leave a report behind — and Beacon has a command line.
+
+**Run reports**
+
+- **A finished Collection Runner run exports a report** in three formats. JSON
+  for machines, **JUnit XML** so Jenkins, GitLab or GitHub Actions show your
+  `pm.test()` assertions as test results, and a self-contained **HTML page**
+  you can open in a browser or attach to a ticket — no scripts, no external
+  requests.
+- **Finished flow runs export the same three formats**, one entry per request
+  node.
+- **Monitors export their health history** as JSON — the schedule, the
+  thresholds, the uptime percentage and every run still kept.
+- **Reports are redacted before they are written, always.** Credential headers
+  lose their values, your API key is blanked wherever it is carried — including
+  under a header or query-parameter name you invented — a `user:password@` in a
+  URL is stripped, and every value you marked **secret** is replaced with
+  `••••••` in URLs, console output, assertion messages and bodies. There is no
+  switch to turn this off. Request and response bodies are left out entirely
+  unless you tick **Include bodies**, which applies to the JSON report only.
+- **The old Export Results button is gone.** It wrote the raw result array,
+  resolved `Authorization` headers and all, straight to a file.
+
+**The `beacon` command line**
+
+- **A new headless runner ships with this release**, as its own download
+  (`beacon-cli-0.3.0.js`). It runs an exported bundle's **collections and
+  flows** from a terminal or a CI job — scripts, cookies, dynamic variables and
+  chained requests included, using the same execution code as the app rather
+  than a re-implementation.
+- **Exit codes are the CI contract:** `0` everything passed, `1` the run
+  finished with failures, `2` the command or the bundle was wrong.
+- `--report json,junit,html` writes the same reports the app exports,
+  `--env-var NAME=value` injects a credential without committing it, and
+  `--no-scripts` runs a bundle without executing any of its code.
+- **It warns when a bundle carries a secret** you exported with it, naming the
+  key and never the value.
+
+**Fixes**
+
+- **Run Again after a collection run did nothing.** The button threw and left
+  the runner where it was.
+- **A flow report could publish an API key** sent under a header or query-name
+  you chose yourself. Flow runs now resolve each step's own auth, the way a
+  collection run always did.
+- **A credential typed straight into the Auth panel** — rather than stored in a
+  variable — is now masked in reports too.
+- **Monitor health exports scrub secrets** out of error messages, which can
+  quote a value a request was carrying.
+
 ## v0.2.2 — 2026-08-13
 
 Every Copy button works again.
