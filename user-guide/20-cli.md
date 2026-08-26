@@ -41,13 +41,13 @@ That installs the command `beacon`. The formula depends on `node`, so Homebrew i
 **Or download the file.** Every Beacon release attaches `beacon-cli-<version>.js` — one self-contained JavaScript file with no dependencies to install. Grab it from the release page and run it with Node 20 or newer:
 
 ```bash
-node beacon-cli-0.2.2.js run api.beacon.json
+node beacon-cli-0.3.0.js run api.beacon.json
 ```
 
 Either way, check what you have with:
 
 ```bash
-beacon --version      # prints the version, e.g. 0.2.2
+beacon --version      # prints the version, e.g. 0.3.0
 beacon --help         # prints the full usage, including the exit codes
 ```
 
@@ -96,7 +96,7 @@ One line per request — the mark (`✓` ran clean, `✗` failed, `-` never ran)
 
 Colour is used when the output is a terminal and dropped when it is piped or redirected, so a captured build log has no escape codes in it. Setting `NO_COLOR` turns colour off in a terminal too.
 
-Press `Ctrl-C` to stop a run: the first press stops it after the request already in flight, then reports what finished. The **run** still fails — exit `1` even if everything that ran passed, because an interrupted run is never green — though the summary block and the report describe only the part that completed, and will read as passing if it did. A second press kills the process.
+Press `Control-C` to stop a run: the first press stops it after the request already in flight, then reports what finished. The **run** still fails — exit `1` even if everything that ran passed, because an interrupted run is never green — though the summary block and the report describe only the part that completed, and will read as passing if it did. A second press kills the process.
 
 ## Every option
 
@@ -163,7 +163,7 @@ Three codes, and the difference between the last two is the point of the command
 | `1` | The run finished with assertion, test or request failures. There is a report describing them. |
 | `2` | Configuration or runtime error — bad flags, an unreadable or invalid bundle, an unknown collection/folder/flow/environment, a report directory that couldn't be written. |
 
-`1` means *your API is broken*; `2` means *your pipeline is broken*. A build step can treat them differently. Most `2`s — a bad flag, a bundle that could not be read or parsed, a name that matched nothing — come with no report at all, because nothing ran. The one exception is a report that could not be written: there the requests did run, and the files that had already been written before the failure are still on disk. See [Reports](#reports).
+`1` means *your API is broken*; `2` means *your pipeline is broken*. A build step can treat them differently. Most exit-`2` cases — a bad flag, a bundle that could not be read or parsed, a name that matched nothing — come with no report at all, because nothing ran. The one exception is a report that could not be written: there the requests did run, and the files that had already been written before the failure are still on disk. See [Reports](#reports).
 
 ## Reports
 
