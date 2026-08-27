@@ -1,5 +1,48 @@
 # Changelog
 
+## v0.3.1 — 2026-08-27
+
+An AI assistant can now work inside Beacon — read your collections, send
+requests with your saved auth, and run collections and flows — without ever
+being able to read a credential.
+
+**MCP / AI access**
+
+- **A new Settings tab, off by default.** Flip **Allow AI clients to control
+  Beacon** and a local socket opens for MCP-capable assistants (Claude,
+  Cursor, and others); flip it off and the socket is gone. The tab shows a
+  live status line and a copy-paste client config built from your machine's
+  real paths.
+- **The AI can use your credentials and can never learn them.** Auth and
+  `{{secret}}` variables resolve inside Beacon; everything an AI reads back —
+  request definitions, environments, history, run reports, even error
+  messages — passes the same redaction Beacon's own report exports use.
+  Reading and running only: no AI-driven create, edit or delete exists at
+  any layer.
+- **Ten tools**, from `beacon_list_collections` to `beacon_run_flow` — an
+  AI-driven send lands in your History like any other request.
+- **Works headless too.** Point the bundled adapter at an exported bundle
+  (`BEACON_BUNDLE`) and it drives the `beacon` CLI instead of the app —
+  reads and runs in CI, with the same redaction, no Beacon window needed.
+- **The full story is a new user-guide chapter**, including exactly what is
+  and isn't redacted and every headless limit: [MCP / AI
+  access](user-guide/21-mcp-ai-access.md).
+
+**The `beacon` command line**
+
+- **`beacon validate --json`** prints a machine-readable, redacted inventory
+  of a bundle — collections, folders, requests, environments and flows — for
+  scripts and for the MCP adapter's headless mode.
+
+**Fixes**
+
+- **A secret variable's *initial* value is now masked everywhere its current
+  value already was.** It previously survived in plain text in what an AI
+  client could read back and in the new `validate --json` inventory.
+- Report redaction now also scrubs oauth2 credentials (client secret,
+  password, access and refresh tokens) and server-issued `Set-Cookie` values
+  out of history read-backs.
+
 ## v0.3.0 — 2026-08-26
 
 Every run can now leave a report behind — and Beacon has a command line.

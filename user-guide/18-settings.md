@@ -1,6 +1,6 @@
 # Settings
 
-*Every setting across the seven tabs, plus the in-app updater.*
+*Every setting across the eight tabs, plus the in-app updater.*
 
 **In this chapter**
 - [General](#general)
@@ -11,11 +11,12 @@
 - [Sync](#sync)
 - [Editor](#editor)
 - [Appearance](#appearance)
+- [MCP / AI access](#mcp--ai-access)
 - [The in-app updater](#the-in-app-updater)
 
 Open **Settings** with `⌘6`, the gear at the bottom of the Activity Rail, or `Sync settings` in the account menu. The modal has a left tab bar and a **Cancel** / **Save** footer.
 
-> **Note:** Settings apply only when you click **Save** — with one deliberate exception, [Privacy](#privacy)'s **Share anonymous usage data** switch, which applies immediately.
+> **Note:** Settings apply only when you click **Save** — with two deliberate exceptions, which apply immediately: [Privacy](#privacy)'s **Share anonymous usage data** switch, and the enable toggle on the **MCP / AI access** tab.
 
 ## General
 
@@ -131,6 +132,10 @@ Clicking a theme previews it immediately: the whole app repaints on the click, s
 
 > **Note:** The Toolbar's theme button is a quick three-way cycle — `System` → `Midnight` → `Paper`. The full set of shades lives here.
 
+## MCP / AI access
+
+One toggle, a live status line, and a copy-paste config block for connecting a local AI assistant to Beacon — it can read your collections, environments, and history, and send requests or run collections and flows, through the same engine the app's own UI uses. Off by default, and — like the Privacy tab's usage-data switch — it applies the moment you flip it rather than waiting for **Save**. The full story, including exactly what an AI client can and can't do and what is and isn't redacted, is its own chapter: [MCP / AI access](21-mcp-ai-access.md).
+
 ## The in-app updater
 
 Beacon compares your version against the latest public release on GitHub and can update itself. It checks quietly a few seconds after launch, and then roughly once an hour for as long as Beacon stays open — so a window you left running for days still notices a new release. Quiet checks stay quiet: if one fails, you never hear about it.
@@ -145,4 +150,4 @@ From your next update onward, the first launch of the new version greets you wit
 
 ---
 
-**See also:** [Cloud accounts](16-cloud-accounts.md) · [History and cookies](17-history-and-cookies.md) · [Interface tour](02-interface-tour.md) · [Getting started](01-getting-started.md)
+**See also:** [MCP / AI access](21-mcp-ai-access.md) · [Cloud accounts](16-cloud-accounts.md) · [History and cookies](17-history-and-cookies.md) · [Interface tour](02-interface-tour.md) · [Getting started](01-getting-started.md)

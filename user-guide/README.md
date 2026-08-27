@@ -40,6 +40,7 @@ Beacon is a keyboard-first, local-first desktop API client — a Postman alterna
 | [Load testing](14-load-testing.md) | Firing a request concurrently to measure latency and throughput |
 | [Mock, WebSocket, and monitors](15-mock-websocket-monitors.md) | Local mock server, WebSocket client, and scheduled monitors |
 | [Command line and CI](20-cli.md) | The `beacon` command: running a bundle's collections and flows headlessly, with reports and exit codes |
+| [MCP / AI access](21-mcp-ai-access.md) | Letting an AI assistant read your collections and send requests through Beacon — what it can do, the redaction promise, and headless use |
 
 ### Cloud
 | Chapter | What it covers |
@@ -49,7 +50,7 @@ Beacon is a keyboard-first, local-first desktop API client — a Postman alterna
 ### Reference
 | Chapter | What it covers |
 |---|---|
-| [Settings](18-settings.md) | Every setting across all seven tabs, the privacy disclosure, sending feedback, and the in-app updater |
+| [Settings](18-settings.md) | Every setting across all eight tabs, the privacy disclosure, sending feedback, and the in-app updater |
 | [Keyboard shortcuts](19-keyboard-shortcuts.md) | The complete shortcut reference |
 
 ## Find it fast
@@ -66,6 +67,9 @@ Beacon is a keyboard-first, local-first desktop API client — a Postman alterna
 | Run every request in a collection at once | [Collection runner](12-collection-runner.md) |
 | Get a run's results into CI, or onto a ticket | [Collection runner → Exporting a run report](12-collection-runner.md#exporting-a-run-report) |
 | Run my collections from a terminal or a build | [Command line and CI](20-cli.md) |
+| Let an AI assistant read my collections and send requests | [MCP / AI access](21-mcp-ai-access.md) |
+| See exactly what an AI client can and can't do in Beacon | [MCP / AI access → What an AI client can and cannot do](21-mcp-ai-access.md#what-an-ai-client-can-and-cannot-do) |
+| Use Beacon's AI tools in CI without the app running | [MCP / AI access → Headless and CI use](21-mcp-ai-access.md#headless-and-ci-use) |
 | Chain one request's output into the next | [Flows](13-flows.md) |
 | Sync my work across machines | [Cloud accounts](16-cloud-accounts.md) |
 | Change the timeout, proxy, or theme | [Settings](18-settings.md) |
