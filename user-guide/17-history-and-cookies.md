@@ -8,7 +8,7 @@
 
 ## History
 
-Open the **History** panel from the Activity Rail (`⌘2`). It lists every request you've sent, newest first, grouped by day under sticky date headers. Each entry shows the method, the URL, and the response status.
+Open the **History** panel from the Activity Rail (`⌘2`). It lists every request you've sent, newest first, grouped by day under sticky date headers. Each entry shows the method, the URL, and the response status. A request sent through [MCP / AI access](21-mcp-ai-access.md) also carries a small **AI** chip, so you can tell an AI client's sends from your own.
 
 - **Restore** — click an entry to reopen that request in a tab, ready to send again.
 - **Search** — the `Search history…` box filters by method and URL.

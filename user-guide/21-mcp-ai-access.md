@@ -53,7 +53,7 @@ Pasting the config is not the same as turning access on: the block renders as so
 
 ## What an AI client can and cannot do
 
-Ten tools, all prefixed `beacon_`. Six only read; three send or run something; one reports status.
+Eleven tools, all prefixed `beacon_`. Seven only read; three send or run something; one reports status.
 
 | Tool | What it does |
 |---|---|
@@ -64,13 +64,18 @@ Ten tools, all prefixed `beacon_`. Six only read; three send or run something; o
 | `beacon_get_history` | Reads recent history entries, redacted, most recent first. |
 | `beacon_list_monitors` | Lists your configured monitors. |
 | `beacon_get_monitor_runs` | Reads a monitor's stored run results. |
+| `beacon_list_flows` | Lists your [flows](13-flows.md) — name and a node count, never the definition itself. |
 | `beacon_send_request` | Sends a saved or ad-hoc request and returns the redacted response. |
 | `beacon_run_collection` | Runs a collection — the same engine the [Collection runner](12-collection-runner.md) uses — and returns a redacted run report. |
-| `beacon_run_flow` | Runs a [flow](13-flows.md) and returns a redacted flow report. |
+| `beacon_run_flow` | Runs a [flow](13-flows.md), by id or by name, and returns a redacted flow report. |
 
 **There is nothing else.** No tool creates, edits, renames, or deletes a request, collection, environment, or anything else — the connection itself carries no such verb, so even a confused or misbehaving AI client has nothing beyond this table to reach for.
 
 Sends can run concurrently, but collection and flow runs share a single slot: starting a second one while one is already in flight gets a `busy` result naming the run that's already going, rather than queueing it silently.
+
+**You can see it happening.** An AI-driven send lands in [History](17-history-and-cookies.md) like any request of your own, marked with a small **AI** chip; if the History panel isn't open when one arrives, a dot appears on its Activity Rail icon and stays until you open the panel. And while an AI client is connected at all, the status bar at the bottom of the window shows **AI connected**. All three are passive markers — Beacon never switches panels or steals focus because an AI did something.
+
+A flow run is visible too, but only if you already have that flow's own tab open: nodes light up as they execute — including a failure — the same way they would for a run you started yourself, plus a "Run by AI client" line in the run log. Like the markers above, this never opens the tab or switches you to it; it only renders while you're already looking at that flow.
 
 ## The redaction promise
 
@@ -99,13 +104,15 @@ Beacon doesn't have to be open for some of these tools to work. If the AI client
 | `beacon_list_collections` | `beacon_get_history` |
 | `beacon_get_request` | `beacon_list_monitors` |
 | `beacon_list_environments` | `beacon_get_monitor_runs` |
+| `beacon_list_flows` | |
 | `beacon_run_collection` | |
 | `beacon_run_flow` | |
 
 A few differences worth knowing about while running this way:
 
 - `beacon_get_request` returns only the id, name, folder, method, and URL headless — no headers, body, scripts, or auth type — because that's all the exported bundle's own inventory carries.
-- `beacon_run_flow`'s `flowId` argument means something different headless: it's matched against a flow's **name**, not its id, because bundle files carry no flow ids at all. Pass a live flow id while running headless and it comes back `not_found` — pass the flow's name instead.
+- `beacon_list_flows` returns only a flow's name and node count headless — no id, and no last-updated time — because that's all an exported bundle's own inventory carries for a flow.
+- `beacon_run_flow`'s `flowId` argument works differently in each mode. Live mode matches it against a flow's id first, then — as a fallback — against a flow's **name**, as long as that name is unique; a name shared by more than one flow is rejected rather than guessed at. Headless mode has no id to fall back from at all: bundle files carry no flow ids, so there `flowId` IS the flow's name, always — pass a live flow's id while running headless and it comes back `not_found`.
 - `bodyCapBytes` and `maxMs` on `beacon_run_collection`/`beacon_run_flow` both work headless too, even though the `beacon` CLI's `run` command has no flag for either one: `maxMs` (default 300000) is enforced by the adapter itself, which kills the CLI process if it's still running once the budget elapses and reports a structured timeout naming it; `bodyCapBytes` (default 65536 bytes) is applied by the adapter after the fact, to the report the CLI hands back, the same way a live run's cap is applied.
 - Headless runs have no single-run-slot guard: two overlapping `beacon_run_collection`/`beacon_run_flow` calls each shell out to their own run independently, rather than the second one being turned away with `busy`.
 

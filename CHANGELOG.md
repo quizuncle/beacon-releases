@@ -1,6 +1,6 @@
 # Changelog
 
-## v0.3.1 — 2026-08-27
+## v0.3.2 — 2026-08-27
 
 An AI assistant can now work inside Beacon — read your collections, send
 requests with your saved auth, and run collections and flows — without ever
@@ -27,6 +27,24 @@ being able to read a credential.
 - **The full story is a new user-guide chapter**, including exactly what is
   and isn't redacted and every headless limit: [MCP / AI
   access](user-guide/21-mcp-ai-access.md).
+
+**Watch it happen**
+
+- **AI-driven flow runs show up live on the canvas.** With a flow's tab open,
+  its nodes light up as an AI client's run walks them — including a node that
+  fails and is routed around, which turns red even when the run completes.
+  A run-log line records the AI run. Nothing ever opens a tab or steals
+  focus.
+- **You can always tell when an AI client acted.** A small dot appears on
+  the History rail icon when AI-sent requests land while you're elsewhere,
+  every AI-sent history row carries an **AI** chip, and the status strip
+  shows a quiet "AI connected" while an assistant holds an authenticated
+  connection.
+- **Flows are first-class for AI clients:** a new `beacon_list_flows` tool,
+  and `beacon_run_flow` accepts the flow's name as well as its id.
+- **Run reports made by an AI client now say so** — attributed to
+  `beacon-control` at the app's real version, instead of claiming
+  `beacon-cli` at version `dev`.
 
 **The `beacon` command line**
 
