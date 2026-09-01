@@ -26,7 +26,7 @@ being able to read a credential.
   reads and runs in CI, with the same redaction, no Beacon window needed.
 - **The full story is a new user-guide chapter**, including exactly what is
   and isn't redacted and every headless limit: [MCP / AI
-  access](user-guide/21-mcp-ai-access.md).
+  access](https://beacon.quizuncle.com/guide/mcp-ai-access/).
 
 **Watch it happen**
 
