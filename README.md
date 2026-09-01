@@ -89,6 +89,33 @@ New versions are published as new [GitHub Releases](https://github.com/quizuncle
 If you installed via Homebrew: `brew upgrade --cask beacon`. Otherwise, download the new
 DMG and repeat the install steps above (it replaces the existing `/Applications/Beacon.app`).
 
+## Connect an AI assistant (MCP)
+
+Beacon can open a local [MCP](https://modelcontextprotocol.io) connection that lets an AI assistant — Claude Desktop, or anything else that speaks the Model Context Protocol — read your collections, environments and history, and send requests or run collections and flows on your behalf, through the exact same engine the app's own UI uses.
+
+It's **off by default**, and lives in **Settings → MCP / AI access**. Turning it on there also reveals a copy-paste config block built from this exact install's own paths — not the placeholder shown below:
+
+```json
+{
+  "mcpServers": {
+    "beacon": {
+      "command": "/Applications/Beacon.app/Contents/MacOS/Beacon",
+      "args": ["/Applications/Beacon.app/Contents/Resources/beacon-mcp.js"],
+      "env": {
+        "ELECTRON_RUN_AS_NODE": "1",
+        "BEACON_CONTROL_DIR": "/Users/you/Library/Application Support/Beacon/control"
+      }
+    }
+  }
+}
+```
+
+The app renders the real paths for your machine; the block above only shows the shape, so it isn't meant to be copied as-is.
+
+An AI client connected this way can use your saved credentials and never read them — everything it reads back is redacted. It can only read, send and run: there's no tool to create, edit, rename or delete anything.
+
+See the full [MCP / AI access](user-guide/21-mcp-ai-access.md) chapter for the complete tool list, exactly what's redacted (and its stated limits), and headless/CI use.
+
 ## Uninstall
 
 ```bash
