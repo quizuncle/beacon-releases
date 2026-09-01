@@ -1,6 +1,6 @@
 # Changelog
 
-## v0.3.2 — 2026-08-27
+## v0.3.2 — 2026-08-30
 
 An AI assistant can now work inside Beacon — read your collections, send
 requests with your saved auth, and run collections and flows — without ever
