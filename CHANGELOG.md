@@ -1,5 +1,65 @@
 # Changelog
 
+## v0.4.0 — 2026-10-15
+
+Turn an OpenAPI spec into a working collection, and keep it in step as the spec changes.
+Run one request across every row of a CSV or JSON file.
+And an AI assistant can now find, call and bulk-run your API's operations — with production kept read-only by default.
+
+**OpenAPI import**
+
+- **Import a spec from a URL or a file.** OpenAPI 3.x and Swagger 2.0, JSON or
+  YAML. You get one collection per spec, a folder per tag, a `{{baseUrl}}`
+  variable from the spec's servers, and one request per operation with an
+  example body built from its schema (server-set `readOnly` fields left out).
+- **Re-sync without losing your edits.** Right-click the collection and choose
+  **Re-sync from spec**: new operations are added, untouched requests are
+  updated, and a request you have edited is left exactly as it is and marked
+  **spec changed**. Operations dropped from the spec are kept and marked
+  **removed from spec**; nothing you deleted comes back.
+- **The full story is a new user-guide chapter:** [Importing OpenAPI
+  specs](https://beacon.quizuncle.com/guide/openapi-import/).
+
+**Run with data**
+
+- **Send one request once per row of a CSV or JSON file.** Open it from the
+  **Run with data** button next to Send, the command palette, or a saved
+  request's right-click menu. Write `{{column}}` anywhere you would use a
+  variable; scripts get the row as `pm.iterationData`.
+- **A column check before you run** flags columns nothing uses and variables
+  no column fills.
+- **Up to 10 rows in parallel**, with a delay, stop-on-first-failure, and a
+  choice of failing on status or on tests. The run keeps going when you switch
+  tabs.
+- **Re-run only the failed rows**, then **export a results CSV** — your input
+  columns plus status, timing and any response fields you pick, with cells
+  guarded so Excel never runs them as formulas.
+- **New chapter:** [Run with
+  data](https://beacon.quizuncle.com/guide/run-with-data/).
+
+**MCP / AI access**
+
+- **Five new tools — sixteen in all.** `beacon_search` finds an operation or
+  request by what it does, `beacon_describe_request` shows its parameters and
+  schema, `beacon_call` calls it by exact id, `beacon_list_specs` lists your
+  imported specs, and `beacon_import_openapi` imports or re-syncs one.
+- **`beacon_call` returns just what the AI asked for.** Pick response fields,
+  cap the body size, and attach checks (`status`, `">0"`, `"!=null"`, `"~text"`)
+  that come back as pass or fail. `beacon_send_request` takes the same options.
+- **Bulk runs from an AI.** Give `beacon_call` a data file or a list of rows
+  and it runs up to 1,000 of them in one call, returning a summary, the failed
+  rows and an optional results CSV. The status bar shows the run with a
+  **Stop** button, and each row lands in History marked as AI.
+- **AI read-only environments, on by default for anything named `prod`.** An
+  AI client may only send `GET`, `HEAD` and `OPTIONS` on such an environment —
+  in calls, sends, and collection and flow runs. Switch it per environment
+  with the **AI read-only** checkbox in the environment editor.
+- **Credential headers stay yours.** `beacon_call` refuses to override
+  `Authorization` and similar headers; keep tokens in an environment secret.
+- The bundled MCP adapter is now `@quizuncle/beacon-mcp` 0.3.0. See [MCP / AI
+  access](https://beacon.quizuncle.com/guide/mcp-ai-access/) for every tool and
+  its limits.
+
 ## v0.3.2 — 2026-08-30
 
 An AI assistant can now work inside Beacon — read your collections, send

@@ -7,6 +7,9 @@
 - [Turning it on](#turning-it-on)
 - [Connecting an AI client](#connecting-an-ai-client)
 - [What an AI client can and cannot do](#what-an-ai-client-can-and-cannot-do)
+- [Finding and calling operations](#finding-and-calling-operations)
+- [beacon_call with data](#beacon_call-with-data)
+- [Read-only environments](#read-only-environments)
 - [The redaction promise](#the-redaction-promise)
 - [Headless and CI use](#headless-and-ci-use)
 - [Troubleshooting](#troubleshooting)
@@ -53,7 +56,7 @@ Pasting the config is not the same as turning access on: the block renders as so
 
 ## What an AI client can and cannot do
 
-Eleven tools, all prefixed `beacon_`. Seven only read; three send or run something; one reports status.
+Sixteen tools, all prefixed `beacon_`. Eleven only read; four send, call or run something; one imports a spec.
 
 | Tool | What it does |
 |---|---|
@@ -65,17 +68,88 @@ Eleven tools, all prefixed `beacon_`. Seven only read; three send or run somethi
 | `beacon_list_monitors` | Lists your configured monitors. |
 | `beacon_get_monitor_runs` | Reads a monitor's stored run results. |
 | `beacon_list_flows` | Lists your [flows](13-flows.md) — name and a node count, never the definition itself. |
+| `beacon_search` | Searches your collections, folders, requests, flows and environment names for an operation or request. |
+| `beacon_describe_request` | Shows one request or operation in detail — parameters, body, schema — with secrets masked. |
+| `beacon_list_specs` | Lists the OpenAPI specs you've imported. |
+| `beacon_call` | Calls one saved request or imported operation by exact id, with optional overrides. |
+| `beacon_import_openapi` | Imports a spec from a URL, or re-syncs an imported one by its spec id. |
 | `beacon_send_request` | Sends a saved or ad-hoc request and returns the redacted response. |
 | `beacon_run_collection` | Runs a collection — the same engine the [Collection runner](12-collection-runner.md) uses — and returns a redacted run report. |
 | `beacon_run_flow` | Runs a [flow](13-flows.md), by id or by name, and returns a redacted flow report. |
 
-**There is nothing else.** No tool creates, edits, renames, or deletes a request, collection, environment, or anything else — the connection itself carries no such verb, so even a confused or misbehaving AI client has nothing beyond this table to reach for.
+**There is nothing else.** The only thing a tool creates is what `beacon_import_openapi` imports. No tool edits, renames, or deletes a request, collection, environment, or anything else — and a re-sync never overwrites a request you have edited (see [Importing OpenAPI specs](22-openapi-import.md#re-syncing)).
 
 Sends can run concurrently, but collection and flow runs share a single slot: starting a second one while one is already in flight gets a `busy` result naming the run that's already going, rather than queueing it silently.
 
 **You can see it happening.** An AI-driven send lands in [History](17-history-and-cookies.md) like any request of your own, marked with a small **AI** chip; if the History panel isn't open when one arrives, a dot appears on its Activity Rail icon and stays until you open the panel. And while an AI client is connected at all, the status bar at the bottom of the window shows **AI connected**. All three are passive markers — Beacon never switches panels or steals focus because an AI did something.
 
 A flow run is visible too, but only if you already have that flow's own tab open: nodes light up as they execute — including a failure — the same way they would for a run you started yourself, plus a "Run by AI client" line in the run log. Like the markers above, this never opens the tab or switches you to it; it only renders while you're already looking at that flow.
+
+## Finding and calling operations
+
+The intended flow is **search, describe, call**.
+
+1. `beacon_search` with `query: "vaccination records"` returns ranked matches. Names are split into words (`getVaccinationRecords`, `/pets/{petId}`), so a request with no summary is still found. An empty query lists your collections. Environment *names* and variable *keys* are searchable; values never are.
+2. `beacon_describe_request` with `operationId: "getPet"` returns the parameters, example body and response schema. Output is secret-scrubbed and kept small.
+3. `beacon_call` sends it:
+
+```json
+{
+  "operationId": "getPet",
+  "environment": "staging",
+  "pathParams": { "petId": "42" },
+  "fields": ["name", "owner.id"],
+  "expect": { "status": 200, "body.name": "!=null" }
+}
+```
+
+`beacon_call` takes an exact `requestId` or an `operationId` (add `specId` if the same operation id exists in two specs). It can override `pathParams`, `query`, `headers` and `body`; credential headers such as `Authorization` are refused — keep tokens in an environment secret variable. `fields` returns only the listed body paths (`["items[].id"]` style), and `maxBytes` (256 to 262,144, default 16,384) caps the body. `expect` is a list of up to 50 checks on `status` and body paths: exact values, `">0"`, `">=2"`, `"!=null"`, and `"~text"` for *contains*. The result carries the pass or fail of each check. `beacon_send_request` accepts `fields`, `maxBytes` and `expect` as well.
+
+`beacon_import_openapi` with `{ "url": "https://api.example.com/v3/api-docs", "auth": "auto" }` imports a spec into the workspace Beacon currently has open (pass `workspaceId` to choose another; an unknown one is refused); `{ "specId": "..." }` re-syncs one, and a failed re-sync is recorded against the spec. A spec imported from a file must be re-synced from the app. `beacon_call` only sends requests in the open workspace; for one found in another workspace it tells you to switch Beacon to that workspace first. `beacon_get_history` returns compact entries and can filter by `origin`, `minStatus`, `urlContains` and `since`; the filters scan only the newest 200 stored history entries.
+
+## beacon_call with data
+
+Add `data` to `beacon_call` to send one saved request once per row of a file or list, in one call. It is the AI version of [Run with data](23-run-with-data.md), with the same `{{column}}` substitution and `pm.iterationData`.
+
+| Input | Meaning |
+|---|---|
+| `data` | Exactly one of `{ "path": "/abs/rows.csv" }` or `{ "rows": [ {...} ] }`. A path is absolute, a regular file (not a symlink), up to 5 MB, ending `.csv` or `.json`. `rows` is a non-empty array of flat objects. |
+| `concurrency` | Rows in flight at once, 1 to 10. Default 1. |
+| `delayMs` | Pause before each worker's next row, 0 to 60,000. Default 0. |
+| `stopOnFailure` | Send no new rows after a failure. Default false. |
+| `failOn` | `"status"` (default) or `"tests"`. |
+| `startRow` | First row to run, 1-based. Earlier rows are skipped; row numbers stay the original ones. |
+| `resultsPath` | Optional absolute path ending `.csv`, in a folder that exists. The file is created, never overwritten; one that already exists is refused. It lists every row of the file; rows before `startRow` and rows that did not run say `not run`. |
+| `maxMs` | Time limit for the whole run. Default 600,000, maximum 1,800,000 (a single call without `data`: default 300,000, maximum 600,000). It must be larger than `timeoutMs`: no new row starts within `timeoutMs` of the limit, so a row in flight can finish in time. |
+
+`pathParams`, `query`, `headers`, `body`, `fields` and `expect` still apply to every row, and `{{column}}` is substituted in them too, except in header names: a header name with `{{` is refused (`header names may not contain {{variables}}`), in single calls too. `expect` is checked against the full response body.
+
+A call runs at most 1,000 rows (counted after `startRow`); more is refused before anything is sent. Everything is checked before the first row goes out: the arguments, then the read-only rule, then whether another run is in flight (`busy`). A refusal sends nothing.
+
+The result is a summary, not every row:
+
+```json
+{
+  "summary": { "total": 300, "run": 300, "passed": 293, "failed": 7, "notRun": 0,
+               "statusCounts": { "200": 293, "409": 6, "500": 1 }, "durationMs": 24810,
+               "stopped": null, "nextRow": null },
+  "failed": [ { "row": 3, "values": { "erpOrderId": "ERP-104250" }, "status": 409,
+                "error": null, "fields": { "message": "Order already shipped" }, "expect": null } ],
+  "failedOmitted": 0,
+  "passedRows": "1-2,4-300",
+  "resultsPath": "/abs/path.results.csv"
+}
+```
+
+`stopped` is `null`, `"user"`, `"failure"`, `"time_limit"` or `"disconnected"`. When it is set, `nextRow` is the first row that did not run: call again with `startRow` set to it to resume. The `failed` list is cut at 64 KB; the rows left out are counted in `failedOmitted`. If the results file cannot be written, the run is kept and the result has `resultsPath: null` and a `resultsError`.
+
+**Read-only.** The [read-only rule](#read-only-environments) is checked once, before the first row. A `POST` on an AI read-only environment, such as `prod`, is refused with `read_only_env` and nothing is sent. To let an AI client run bulk `POST`s, turn off **AI read-only** for that environment in the environment editor; the same call then goes through.
+
+**History and the status bar.** Each row that got a response adds one History entry marked as AI, written as the row finishes. A row that failed before a response (an `error` with no status) adds none. While the run goes, the status bar shows `AI run · done/total` with a `Stop` button; Stop ends the run as `user` and in-flight rows finish.
+
+## Read-only environments
+
+An environment marked **AI read-only** only allows `GET`, `HEAD` and `OPTIONS` from an AI client — in `beacon_call`, `beacon_send_request`, and collection and flow runs. A blocked call fails with a message starting `read_only_env:` and nothing is sent. Environments whose name contains `prod` are read-only by default; change it with the **AI read-only** checkbox in the environment editor. Method-override headers (`X-HTTP-Method-Override` and similar) are refused too. It does not inspect requests made by scripts, and it doesn't stop an AI client from pointing a non-read-only environment at another host through variable overrides. See [Importing OpenAPI specs](22-openapi-import.md#ai-read-only-environments).
 
 ## The redaction promise
 
@@ -106,7 +180,8 @@ Beacon doesn't have to be open for some of these tools to work. If the AI client
 | `beacon_list_environments` | `beacon_get_monitor_runs` |
 | `beacon_list_flows` | |
 | `beacon_run_collection` | |
-| `beacon_run_flow` | |
+| `beacon_run_flow` | `beacon_search`, `beacon_describe_request`, `beacon_list_specs` |
+| | `beacon_call`, `beacon_import_openapi` |
 
 A few differences worth knowing about while running this way:
 
@@ -126,4 +201,4 @@ A few differences worth knowing about while running this way:
 
 ---
 
-**See also:** [Settings](18-settings.md) · [Command line and CI](20-cli.md) · [Collection runner](12-collection-runner.md) · [Flows](13-flows.md)
+**See also:** [Run with data](23-run-with-data.md) · [Importing OpenAPI specs](22-openapi-import.md) · [Settings](18-settings.md) · [Command line and CI](20-cli.md) · [Collection runner](12-collection-runner.md) · [Flows](13-flows.md)

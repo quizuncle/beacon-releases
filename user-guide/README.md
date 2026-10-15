@@ -41,6 +41,8 @@ Beacon is a keyboard-first, local-first desktop API client — a Postman alterna
 | [Mock, WebSocket, and monitors](15-mock-websocket-monitors.md) | Local mock server, WebSocket client, and scheduled monitors |
 | [Command line and CI](20-cli.md) | The `beacon` command: running a bundle's collections and flows headlessly, with reports and exit codes |
 | [MCP / AI access](21-mcp-ai-access.md) | Letting an AI assistant read your collections and send requests through Beacon — what it can do, the redaction promise, and headless use |
+| [Importing OpenAPI specs](22-openapi-import.md) | Turning a spec into a collection, re-syncing it without losing your edits, and the badges |
+| [Run with data](23-run-with-data.md) | Running one request once per row of a CSV or JSON file, re-running failed rows, and exporting results |
 
 ### Cloud
 | Chapter | What it covers |
@@ -70,6 +72,10 @@ Beacon is a keyboard-first, local-first desktop API client — a Postman alterna
 | Let an AI assistant read my collections and send requests | [MCP / AI access](21-mcp-ai-access.md) |
 | See exactly what an AI client can and can't do in Beacon | [MCP / AI access → What an AI client can and cannot do](21-mcp-ai-access.md#what-an-ai-client-can-and-cannot-do) |
 | Use Beacon's AI tools in CI without the app running | [MCP / AI access → Headless and CI use](21-mcp-ai-access.md#headless-and-ci-use) |
+| Import an OpenAPI spec and keep it in sync | [Importing OpenAPI specs](22-openapi-import.md) |
+| Run one request for every row of a CSV or JSON file | [Run with data](23-run-with-data.md) |
+| Let an AI run a request over many rows | [MCP / AI access → beacon_call with data](21-mcp-ai-access.md#beacon_call-with-data) |
+| Stop an AI from changing data in production | [MCP / AI access → Read-only environments](21-mcp-ai-access.md#read-only-environments) |
 | Chain one request's output into the next | [Flows](13-flows.md) |
 | Sync my work across machines | [Cloud accounts](16-cloud-accounts.md) |
 | Change the timeout, proxy, or theme | [Settings](18-settings.md) |
