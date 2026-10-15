@@ -143,7 +143,7 @@ The result is a summary, not every row:
 
 `stopped` is `null`, `"user"`, `"failure"`, `"time_limit"` or `"disconnected"`. When it is set, `nextRow` is the first row that did not run: call again with `startRow` set to it to resume. The `failed` list is cut at 64 KB; the rows left out are counted in `failedOmitted`. If the results file cannot be written, the run is kept and the result has `resultsPath: null` and a `resultsError`.
 
-**Read-only.** The [read-only rule](#read-only-environments) is checked once, before the first row. A `POST` on an AI read-only environment, such as `prod`, is refused with `read_only_env` and nothing is sent. To let an AI client run bulk `POST`s, turn off **AI read-only** for that environment in the environment editor; the same call then goes through.
+**Read-only.** The [read-only rule](#read-only-environments) is checked once, before the first row. A `POST` on an AI read-only environment, such as `prod`, is refused with `read_only_env` and nothing is sent. To let an AI client run bulk `POST` requests, turn off **AI read-only** for that environment in the environment editor; the same call then goes through.
 
 **History and the status bar.** Each row that got a response adds one History entry marked as AI, written as the row finishes. A row that failed before a response (an `error` with no status) adds none. While the run goes, the status bar shows `AI run · done/total` with a `Stop` button; Stop ends the run as `user` and in-flight rows finish.
 
